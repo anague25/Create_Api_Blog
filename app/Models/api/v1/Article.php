@@ -37,9 +37,9 @@ class Article extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function userLike():BelongsToMany
+    public function like():HasMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(Like::class);
     }
 
     public function tag():BelongsToMany

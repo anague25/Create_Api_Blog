@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\api\v1\user\UserLoginRequest;
 use App\Http\Requests\api\v1\user\UserUpdateRequest;
 use App\Http\Requests\api\v1\user\UserRegisterRequest;
+use App\Models\api\v1\Article;
 
 class UserController extends Controller
 {
@@ -26,7 +27,7 @@ class UserController extends Controller
 
             $user = new User();
 
-            $data = $this->storeAndUpdateImage($request, $user);
+            $data = $this->storeAndUpdateImage($request, $user,$folderNameImage='user');
             $data['password'] = Hash::make($request->validated('password'));
 
 
@@ -93,7 +94,7 @@ class UserController extends Controller
             $userExist = User::where('id', $user->id)->exists();
             if ($userExist) {
 
-                $data = $this->storeAndUpdateImage($request, $user);
+                $data = $this->storeAndUpdateImage($request, $user,$folderNameImage='user');
 
                 $updateUser = $user->update($data);
 
@@ -134,26 +135,7 @@ class UserController extends Controller
 
 
 
-     /**
-     * store or update image
-     */
-    public function storeAndUpdateImage($request, User $user)
-    {
-
-        $data = $request->validated();
-
-        $image = $request->validated('image');
-        if ($image == null || $image->getError()) {
-            return $data;
-        }
-
-        if ($user->image) {
-            Storage::disk('public')->delete($user->image);
-        }
-
-        $data['image'] = $image->store('user', 'public');
-        return $data;
-    }
+     
 
     /**
      * get all user
@@ -190,8 +172,49 @@ class UserController extends Controller
     /**
      * delete user
      */
-    public function destroy(string $id)
+    public function destroy()
     {
-        //
+
+        $user = User::find(auth()->user()->id);
+
+        if(!$user){
+            return response()->json([
+                'status' => 0,
+                'status_message' => 'User not found',
+            ], 404);
+        }
+
+
+        if ($user->image) {
+            Storage::disk('public')->delete($user->image);
+        }
+
+        $posts = Article::where('user_id',$user->id)->get();
+
+        foreach($posts as $post){
+            if ($post->image) {
+                Storage::disk('public')->delete($post->image);
+            }
+
+            $post->comment()->delete();
+            $post->like()->delete();
+            $post->tag()->sync([]);
+            $post->tag()->delete();
+        }
+
+      
+    //    $posts->delete();
+        $user->article()->delete();
+        $user->comment()->delete();
+        $user->like()->delete();
+        $user->tag()->delete();
+        $user->delete();
+
+        return response()->json([
+            'status' => 1,
+            'status_message' => 'User deleted successfully',
+        ], 200);
+       
+    
     }
 }

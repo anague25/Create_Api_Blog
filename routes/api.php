@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\api\v1\ArticleController;
+use App\Http\Controllers\api\v1\CategoryController;
 use App\Http\Controllers\api\v1\CommentController;
 use App\Http\Controllers\api\v1\LikeController;
+use App\Http\Controllers\api\v1\SearchController;
+use App\Http\Controllers\api\v1\TagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\v1\UserController;
@@ -35,6 +38,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('logout',[UserController::class,'logout']);
     //get user information
     Route::get('/user',[UserController::class,'user']);
+    //user would like to detroy his account (delete my account) 
+    Route::delete('/user/destroy',[UserController::class,'destroy']);
 });
 
 
@@ -48,7 +53,7 @@ Route::middleware('auth:sanctum')->group(function(){
     //get single post
     Route::get('/posts/{post}',[ArticleController::class,'show']);
     //updade post
-    Route::put('/posts/{post}/update',[ArticleController::class,'update']);
+    Route::post('/posts/{post}/update',[ArticleController::class,'update']);
     //delete post
     Route::delete('/posts/{post}',[ArticleController::class,'destroy']);
 });
@@ -59,12 +64,60 @@ Route::middleware('auth:sanctum')->group(function(){
 Route::middleware('auth:sanctum')->group(function(){
     //get all comment of a post
     Route::get('/posts/{post}/comments',[CommentController::class,'index']);
-    //create post
+    //create comment
     Route::post('/posts/{post}/comments',[CommentController::class,'store']);
-    //updade post
+    //updade comment
     Route::put('/comments/{comment}/update',[CommentController::class,'update']);
-    //delete post
+    //delete comment
     Route::delete('/comments/{comment}',[CommentController::class,'destroy']);
+});
+
+
+/** Route to manage comment  */
+
+Route::middleware('auth:sanctum')->group(function(){
+    //get all comment of a post
+    Route::get('/posts/{post}/comments',[CommentController::class,'index']);
+    //create comment
+    Route::post('/posts/{post}/comments',[CommentController::class,'store']);
+    //updade comment
+    Route::put('/comments/{comment}/update',[CommentController::class,'update']);
+    //delete comment
+    Route::delete('/comments/{comment}',[CommentController::class,'destroy']);
+});
+
+/** Route to manage category  */
+
+Route::middleware('auth:sanctum')->group(function(){
+    //get all categories that user has created
+    Route::get('/category',[CategoryController::class,'index']);
+    //create category
+    Route::post('/category',[CategoryController::class,'store']);
+    //updade category
+    Route::post('/category/{category}/update',[CategoryController::class,'update']);
+    //delete category
+    Route::delete('/category/{category}/delete',[CategoryController::class,'destroy']);
+});
+
+/** Route to manage tags  */
+Route::middleware('auth:sanctum')->group(function(){
+    //get all tags that user has created
+    Route::get('/tags',[TagController::class,'index']);
+    //to create tags
+    Route::post('/tags',[TagController::class,'store']);
+    //updade tags
+    Route::post('/tags/{tag}/update',[TagController::class,'update']);
+    //delete category
+    Route::delete('/tags/{tag}/delete',[TagController::class,'destroy']);
+});
+
+/** Route to manage search  */
+
+Route::middleware('auth:sanctum')->group(function(){
+    //you can search by title,content,author,tag,category,
+    Route::get('/searchs',[SearchController::class,'search']);
+
+   
 });
 
 /** Route to manage like  */

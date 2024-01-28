@@ -5,6 +5,8 @@ namespace App\Http\Controllers\api\v1;
 use Illuminate\Http\Request;
 use App\Models\api\v1\Article;
 use App\Http\Controllers\Controller;
+use App\Models\api\v1\Like;
+use Exception;
 
 class LikeController extends Controller
 {
@@ -13,6 +15,8 @@ class LikeController extends Controller
      */
     public function likeOrUnlike(Article $post )
     {
+       try{
+
         if(!$post)
         {
             return response()->json([
@@ -21,14 +25,18 @@ class LikeController extends Controller
             ],404);
         }
 
-        $like = $post->userLike()->where('user_id',auth()->user()->id)->first();
+        $like = $post->like()->where('user_id',auth()->user()->id)->first();
 
-        // if not liked then like
+        // if it not liked post then like
 
-
+// dd($like);
         if(!$like)
         {
-           $post->userLike()->attach(auth()->user()->id);
+          Like::create([
+            'liked' => 1,
+            'article_id' => $post->id,
+            'user_id' => auth()->user()->id
+          ]);
 
            return response()->json([
                'status' => 1,
@@ -37,7 +45,7 @@ class LikeController extends Controller
         }else{
             //dislike
            
-            $post->userLike()->detach(auth()->user()->id);
+            $like->delete();
 
            return response()->json([
                'status' => 1,
@@ -46,55 +54,16 @@ class LikeController extends Controller
         }
 
 
+       }
+       catch(Exception $e){
+        return response()->json($e);
+       }
+
+
 
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
+
+    

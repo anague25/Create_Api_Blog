@@ -7,12 +7,14 @@ namespace App\Models;
 use App\Models\api\v1\Article;
 use App\Models\api\v1\Category;
 use App\Models\api\v1\Comment;
+use App\Models\api\v1\Like;
 use App\Models\api\v1\Role;
 use App\Models\api\v1\Tag;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -60,9 +62,9 @@ class User extends Authenticatable
         return $this->hasMany(Article::class);
     }
 
-    public function articleLike():BelongsToMany
+    public function like():HasMany
     {
-        return $this->belongsToMany(Article::class);
+        return $this->hasMany(Like::class);
     }
 
     public function tag() : HasMany

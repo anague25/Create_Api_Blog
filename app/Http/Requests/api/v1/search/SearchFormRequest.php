@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\api\v1\article;
+namespace App\Http\Requests\api\v1\search;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ArticleStoreRequest extends FormRequest
+class SearchFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,11 @@ class ArticleStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string',
-            'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,jpg,png,svg|max:2048',
-            'category_id' => 'required|exists:categories,id',
-            'tags' => 'required|array|exists:tags,id',
+            'title' => 'nullable|string',
+            'category' => 'nullable|string',
+            'tag' => 'nullable|string',
+            'content' => 'nullable|string',
+            'author' => 'nullable|string'
         ];
     }
 }

@@ -25,6 +25,8 @@ class ArticleUpdateRequest extends FormRequest
             'title' => 'required|string',
             'content' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,jpg,png,svg|max:2048',
+            'category_id' => 'required|exists:categories,id',
+            'tags' => 'required|array|exists:tags,id',
         ];
     }
 }
