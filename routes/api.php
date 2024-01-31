@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\v1\admin\ArticlesController;
 use App\Http\Controllers\api\v1\admin\CommentsController;
 use App\Http\Controllers\api\v1\admin\RolesController;
+use App\Http\Controllers\api\v1\admin\SearchAdminFormController;
 use App\Http\Controllers\api\v1\admin\UsersController;
 use App\Http\Controllers\api\v1\ArticleController;
 use App\Http\Controllers\api\v1\CategoryController;
@@ -63,6 +64,13 @@ Route::middleware('auth:sanctum')->group(function(){
             Route::get('/roles',[RolesController::class ,'index']);
             //delete role
             Route::delete('/role/{role}/destroy',[RolesController::class,'destroy']);
+
+
+
+//-----------------------------------------ADMIN MANAGE SEARCH ------------------------------------------------------------------------------------------//
+            //get all roles 
+            Route::get('/search',[SearchAdminFormController::class ,'search']);
+           
 
 
 //----------------------------------------- MANAGE COMMENTS ------------------------------------------------------------------------------------------//

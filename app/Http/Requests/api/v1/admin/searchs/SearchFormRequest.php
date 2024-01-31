@@ -24,9 +24,7 @@ class SearchFormRequest extends FormRequest
         return [
             'title' => 'nullable|string',
             'category' => 'nullable|string',
-            'tag' => 'nullable|string',
-            'content' => 'nullable|string',
-            'author' => 'nullable|string'
+           
         ];
     }
 }
