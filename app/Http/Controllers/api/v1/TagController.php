@@ -17,11 +17,21 @@ class TagController extends Controller
      */
     public function index()
     {
+        return response()->json(
+            [
+                'status' => 1,
+                'tag' => Tag::where('user_id',auth()->user()->id)->get()
+            ],200);
+
+    }
+
+
+    public function show(Tag $tag)
+    {
         return response()->json([
             'status' => 1,
-            'tag' => Tag::where('user_id',auth()->user()->id)->get()
+            'category' => $tag
 
-           
                                 ],200);
 
     }
@@ -47,21 +57,7 @@ class TagController extends Controller
           }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+  
 
     /**
      * Update the specified resource in storage.
@@ -117,7 +113,8 @@ class TagController extends Controller
                     'message' => 'Permission denied'
                 ],403);
             }
-    
+
+            $tag->article()->sync([]);
             $tag->delete();
     
             return response()->json([

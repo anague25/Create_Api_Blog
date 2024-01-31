@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\api\v1;
 
-use App\Models\User;
-use Illuminate\Http\Request;
+
 use App\Models\api\v1\Article;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use App\Http\Requests\api\v1\article\ArticleStoreRequest;
 use App\Http\Requests\api\v1\article\ArticleUpdateRequest;
 
@@ -60,7 +58,9 @@ class ArticleController extends Controller
     {
         return response()->json([
             'status' => 1,
-            'post' => Article::where('id',$post->id)->withCount('comment','like')->get()
+            'post' => Article::where('id',$post->id)
+            ->with('user:id,firstName,lastName,image','tag','category','comment','like')
+            ->withCount('comment','like')->get()
         ],200);
     }
 
@@ -123,8 +123,12 @@ class ArticleController extends Controller
         if ($post->image) {
             Storage::disk('public')->delete($post->image);
         }
+
+        $post->category()->dissociate();
+        $post->save();
         $post->comment()->delete();
         $post->like()->delete();
+        $post->tag()->sync([]);
         $post->delete();
 
         return response()->json([

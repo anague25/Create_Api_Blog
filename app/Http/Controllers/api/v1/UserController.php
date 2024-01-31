@@ -142,7 +142,16 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        try{
+            return response()->json([
+                'status' => '1',
+                'users' => User::orderByDesc('created_at')->with('role')->get()
+            ],200);
+        }
+        catch(Exception $e)
+        {
+            return response()->json($e);
+        }
     }
 
     
@@ -151,7 +160,7 @@ class UserController extends Controller
     /**
      * get single user
      */
-    public function user()
+    public function show()
     {
         try{
             return response()->json([
@@ -191,23 +200,27 @@ class UserController extends Controller
 
         $posts = Article::where('user_id',$user->id)->get();
 
+        //    $posts->delete();
         foreach($posts as $post){
             if ($post->image) {
                 Storage::disk('public')->delete($post->image);
             }
 
+            $post->category()->dissociate();
+            $post->save();
             $post->comment()->delete();
             $post->like()->delete();
             $post->tag()->sync([]);
-            $post->tag()->delete();
+            $post->delete();
         }
 
       
-    //    $posts->delete();
         $user->article()->delete();
+        $user->category()->delete();
         $user->comment()->delete();
         $user->like()->delete();
         $user->tag()->delete();
+        $user->role()->sync([]);
         $user->delete();
 
         return response()->json([

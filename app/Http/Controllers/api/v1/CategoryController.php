@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\api\v1;
 
 use Exception;
-use Illuminate\Http\Request;
-use App\Models\api\v1\Article;
+
 use App\Models\api\v1\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\v1\categories\CategoryStoreRequest;
 use App\Http\Requests\api\v1\categories\CategoryUpdateRequest;
+use App\Models\api\v1\Article;
+use App\Models\User;
 
 class CategoryController extends Controller
 {
@@ -19,9 +20,19 @@ class CategoryController extends Controller
     {
         return response()->json([
             'status' => 1,
-            'category' => Category::where('user_id',auth()->user()->id)->get()
+            'categories' => Category::where('user_id',auth()->user()->id)->get()
 
             // 'category' => Category::with('user')->where('user_id',auth()->user()->id)->get(),
+                                ],200);
+
+    }
+
+    public function show(Category $category)
+    {
+        return response()->json([
+            'status' => 1,
+            'category' => $category
+
                                 ],200);
 
     }
@@ -101,7 +112,16 @@ class CategoryController extends Controller
                     'message' => 'Permission denied'
                 ],403);
             }
-    
+            
+
+            $posts = $category->article;
+            if($posts){
+                foreach($posts as $post)
+                {
+                    $post->category()->dissociate();
+                    $post->save();
+                }
+            }
             $category->delete();
     
             return response()->json([

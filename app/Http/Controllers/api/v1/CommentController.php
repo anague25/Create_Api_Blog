@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\api\v1;
 
-use Illuminate\Http\Request;
 use App\Models\api\v1\Article;
 use App\Models\api\v1\Comment;
 use App\Http\Controllers\Controller;
@@ -13,9 +12,14 @@ class CommentController extends Controller
 {
     /**
      * get all comment of a post.
+      
      */
-    public function index(Article $post)
+    
+    
+     public function index($id)
     {
+        $post = Article::find($id);
+       
         if(!$post){
             return response()->json([
                 'status' => 0,
@@ -26,6 +30,19 @@ class CommentController extends Controller
         return response()->json([
             'status' => 1,
             'comments' => $post->comment()->with('user:id,firstName,lastName,image')->get()
+        ],200);
+    }
+
+
+
+     /**
+     * Get single post
+     */
+    public function show(Comment $comment)
+    {
+        return response()->json([
+            'status' => 1,
+            'comment' => $comment
         ],200);
     }
 
@@ -56,15 +73,7 @@ class CommentController extends Controller
         ],200);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-
+  
 
     /**
      * Update comment.
@@ -116,8 +125,8 @@ class CommentController extends Controller
             ],403);
         }
 
-
-       $comment->delete();
+        
+        $comment->delete();
 
         return response()->json([
             'status' => 1,
