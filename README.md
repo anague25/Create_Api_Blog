@@ -188,7 +188,7 @@ le blog est une application qui va contenir des articles ecrits par un ou plusie
 
     Comme endpoints pour gerer les likes nous avouns : 
         
-    - La route : **Route::post('/posts/{post}/likes',[LikeController::class,'likeOrUnlike'])** , elle permet de faire un like ou de deliker.
+    - La route : **Route::post('/posts/{post}/likes',[LikeController::class,'likeOrUnlike'])** , elle permet de faire un like et de pouvoir annuler le like .
 
 
 ----
