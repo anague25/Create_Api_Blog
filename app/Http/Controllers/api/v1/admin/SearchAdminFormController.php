@@ -12,6 +12,9 @@ use App\Http\Requests\api\v1\admin\searchs\SearchFormRequest;
 
 class SearchAdminFormController extends Controller
 {
+
+
+    // you can search by title,category
     public function search(SearchFormRequest $request){
     
 

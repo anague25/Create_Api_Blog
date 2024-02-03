@@ -11,7 +11,7 @@ use Exception;
 class LikeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * like or dislike post.
      */
     public function likeOrUnlike(Article $post )
     {

@@ -11,7 +11,6 @@ use App\Http\Controllers\api\v1\CommentController;
 use App\Http\Controllers\api\v1\LikeController;
 use App\Http\Controllers\api\v1\SearchController;
 use App\Http\Controllers\api\v1\TagController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\v1\UserController;
 
@@ -68,7 +67,9 @@ Route::middleware('auth:sanctum')->group(function(){
 
 
 //-----------------------------------------ADMIN MANAGE SEARCH ------------------------------------------------------------------------------------------//
-            //get all roles 
+           
+
+            //you can search by title,category
             Route::get('/search',[SearchAdminFormController::class ,'search']);
            
 
@@ -121,15 +122,15 @@ Route::middleware('auth:sanctum')->group(function(){
 
 //----------------------------------------- ROUTE TO MANAGE ARTICLE OR POST -----------------------------------------------------------------------//
 Route::middleware('auth:sanctum')->group(function(){
-    //get all posts or article
+    //get all articles and theirs users,categories,comments,like, number of like , number of comments
     Route::get('/posts',[ArticleController::class,'index']);
-    //create post
+    //create article
     Route::post('/posts',[ArticleController::class,'store']);
-    //get single post
+    //get single article and her user,category,comments,likes, number of likes , number of comments
     Route::get('/posts/{post}',[ArticleController::class,'show']);
-    //updade post
+    //updade article
     Route::post('/posts/{post}/update',[ArticleController::class,'update']);
-    //delete post
+    //delete article
     Route::delete('/posts/{post}',[ArticleController::class,'destroy']);
 });
 
@@ -177,7 +178,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/tags',[TagController::class,'store']);
     //updade tags
     Route::post('/tags/{tag}/update',[TagController::class,'update']);
-    //delete category
+    //delete tags
     Route::delete('/tags/{tag}/delete',[TagController::class,'destroy']);
 });
 
@@ -185,7 +186,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
 //----------------------------------------- ROUTE TO MANAGE SEARCHS -----------------------------------------------------------------------//
 Route::middleware('auth:sanctum')->group(function(){
-    //you can search by title,content,author,tag,category,
+    //you can search by title,content,author,tag,category
     Route::get('/searchs',[SearchController::class,'search']);
 
    

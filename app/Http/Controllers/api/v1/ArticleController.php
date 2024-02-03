@@ -13,7 +13,7 @@ use App\Http\Requests\api\v1\article\ArticleUpdateRequest;
 class ArticleController extends Controller
 {
     /**
-     * get all post
+     * get all articles and theirs users,categories,comments,like, number of like , number of comments
      */
     public function index()
     {
@@ -52,7 +52,7 @@ class ArticleController extends Controller
 
 
     /**
-     * Get single post
+     * get single articles and her user,category,comments,likes, number of likes , number of comments
      */
     public function show(Article $post)
     {

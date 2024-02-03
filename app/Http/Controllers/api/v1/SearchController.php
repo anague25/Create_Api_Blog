@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
+
+    // you can search by title,content,author,tag,category
     public function search(SearchFormRequest $request){
        
         

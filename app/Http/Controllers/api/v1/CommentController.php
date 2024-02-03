@@ -36,7 +36,7 @@ class CommentController extends Controller
 
 
      /**
-     * Get single post
+     * Get single comment
      */
     public function show(Comment $comment)
     {
@@ -105,7 +105,7 @@ class CommentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * delete comment.
      */
     public function destroy(Comment $comment)
     {

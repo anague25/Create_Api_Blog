@@ -12,9 +12,8 @@ use App\Http\Requests\api\v1\admin\users\UserUpdateRequest;
 
 class UsersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+     //get all user 
     public function index()
     {
         try{
@@ -43,8 +42,7 @@ class UsersController extends Controller
     }
 
 
-    /** get single user */
-
+//get single user
 public function show(User $user){
     try{
 
@@ -71,9 +69,7 @@ public function show(User $user){
     }
 }
 
-    /**
-     * Update the specified resource in storage.
-     */
+   //updade user
     public function update(UserUpdateRequest $request, User $user)
     {
         

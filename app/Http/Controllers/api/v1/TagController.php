@@ -25,20 +25,20 @@ class TagController extends Controller
 
     }
 
-
+// get single tags
     public function show(Tag $tag)
     {
         return response()->json([
             'status' => 1,
             'category' => $tag
 
-                                ],200);
+        ],200);
 
     }
 
    
     /**
-     * Store a newly created resource in storage.
+     *  to create tags.
      */
     public function store(TagStoreRequest $request)
     {
@@ -60,7 +60,7 @@ class TagController extends Controller
   
 
     /**
-     * Update the specified resource in storage.
+     * updade tags
      */
     public function update(TagUpdateRequest $request, Tag $tag)
     {
@@ -93,7 +93,7 @@ class TagController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * delete tags
      */
     public function destroy(Tag $tag)
     {

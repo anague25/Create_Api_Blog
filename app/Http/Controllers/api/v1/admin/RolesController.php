@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Gate;
 class RolesController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * //get all roles 
      */
     public function index()
     {
@@ -46,7 +46,7 @@ class RolesController extends Controller
   
 
     /**
-     * Remove the specified resource from storage.
+     * delete role
      */
     public function destroy(Role $role)
     {

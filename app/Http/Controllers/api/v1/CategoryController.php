@@ -14,7 +14,7 @@ use App\Models\User;
 class CategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * get all categories that user has created.
      */
     public function index()
     {

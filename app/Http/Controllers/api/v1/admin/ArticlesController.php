@@ -14,7 +14,7 @@ use App\Http\Requests\api\v1\admin\article\ArticleUpdateRequest;
 class ArticlesController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * get all articles and theirs users,categories,comments,like, number of like , number of comments
      */
     public function index()
     {
@@ -48,7 +48,7 @@ class ArticlesController extends Controller
 
 
     /**
-     * Get single post
+     *  get single articles and her user,category,comments,likes, number of likes , number of comments 
      */
     public function show(Article $post)
     {
@@ -96,7 +96,7 @@ class ArticlesController extends Controller
 
 
     /**
-     * Update the specified resource in storage.
+     * updade a user is article
      */
     public function update(ArticleUpdateRequest $request, Article $post, User $user)
     {
@@ -146,7 +146,7 @@ class ArticlesController extends Controller
     
 
     /**
-     * Remove the specified resource from storage.
+     * delete a user is article
      */
     public function destroy(Article $post, User $user)
     {

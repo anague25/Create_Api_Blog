@@ -1,66 +1,210 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Réalisation d'une api de blog avec laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+le blog est une application qui va contenir des articles ecrits par un ou plusieurs auteurs.
 
-## About Laravel
+## **Le blog offre les Fonctionnalités suivantes :**
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1. **La gestion des utilisateurs**
+    - Inscription.
+    - Connection.
+    - Modification des informations.
+    - Deconnection.
+    - creer des permissions.
+    - attribution des roles.
+    - creation du role admin avec les fonctionnalitees suivantes :
+        - Suppressions des utilisateurs.
+        - Suppressions des articles.
+        - Creation des articles.
+        - Modifier le rôle d’un utilisateur.
+        - Modifier ses articles.
+        - Pouvoir consulter l'ensemble des articles.
+        - Pouvoir consulter l'ensemble des utilisateurs.
+    - Creation du role redacteur avec les fonctionnalitées suivantes :
+        - Creation des articles.
+        - Suppressions de n'importe quelle articles.
+        - Modifier ses articles.
+        - Pouvoir consulter l'ensemble des articles.
+    - Creation du role reader avec les fonctionnalitées suivantes :
+        - Commenter les articles.
+        - Rechercher les articles par titre.
+        - Rechercher les articles par categories.
+        - Pouvoir consulter l'ensemble des articles.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+2. **La gestion des articles :**
+    - Creation des articles.
+    - Modification des articles.
+    - Suppression des articles.
+    - Voir les articles.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+3. **La gestion des commentaires :**
+    - Creation des commentaires.
+    - Modification des commentaires.
+    - Suppression des commentaires.
+    - Voir des commentaires d'un article.
 
-## Learning Laravel
+4. **La gestion des tags :**
+    - Creation des tags.
+    - Modification des tags.
+    - Suppression des tags.
+    - Voir des tags d'un article.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+5. **La gestion des catégories :**
+    - Creation des categories.
+    - Modification des categories.
+    - Suppression des categories.
+    - Voir des categories d'un article.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+6. **La gestion des likes :**
+    - liker un article
+    - annuler son like
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+7. **La gestion des recherches :**
+    - Rechercher un article par tag.
+    - Rechercher un article par auteur.
+    - Rechercher un article par titre.
+    - Rechercher un article par categorie.
+    - Rechercher un article par contenu.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+----
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## **Explication des endpoints**
 
-## Contributing
+### **Les endpoints de la partie administration**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+*N.B : Tous les endpoints de la partie administrateur sont prefixes par le mot "admin"* 
 
-## Code of Conduct
+1. **Les endpoints pour gerer les utilisateurs**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    Comme endpoints pour gerer les utilisateurs nous avouns : 
+    - La route : **Route::get('/user',[UsersController::class ,'index'])** , elle permet de recuperer tous les utilisateurs du blog.
+    - La route : **Route::get('/user/{user}/show',[UsersController::class,'show'])** , elle permet de recuperer un utilisateurs precis.
+    - La route : **Route::post('/user/{user}/update',[UsersController::class,'update'])** , elle permet de modifier les informations d'un utilisateur.
+    - La route : **Route::delete('/user/{user}/destroy',[UsersController::class,'destroy'])** , elle permet de supprimer le compte d'un utilisateur.
 
-## Security Vulnerabilities
+2. **Les endpoints pour gerer les articles**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    Comme endpoints pour gerer les articles nous avouns : 
+    - La route : **Route::get('/post',[ArticlesController::class ,'index'])** , elle permet de recuperer tous les articles du blog avec son auteur,sa categorie,ses commentaires,les likes ,le nombre de like et de commentaires.
+    - La route : **Route::get('/post/{post}/show',[ArticlesController::class,'show'])** , elle permet de recuperer un articles du blog avec son auteur,sa categorie,ses commentaires,les likes ,le nombre de like et de commentaires.
+    - La route : **Route::post('/post/{post}/{user}/update',[ArticlesController::class,'update'])** , elle permet de modifier les informations d'un article.
+    - La route : **Route::delete('/post/{post}/{user}/destroy',[ArticlesController::class,'destroy'])** , elle permet de supprimer un article. 
 
-## License
+3. **Les endpoints pour gerer les roles**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    Comme endpoints pour gerer les roles nous avouns : 
+    - La route : **Route::get('/roles',[RolesController::class ,'index'])** , elle permet de recuperer tous les roles.
+    - La route : **Route::delete('/role/{role}/destroy',[RolesController::class,'destroy'])** , elle permet de supprimer un role.
+
+4. **Les endpoints pour gerer la recherche**
+
+    Comme endpoints pour gerer la recherche nous avouns : 
+    - La route : **Route::get('/search',[SearchAdminFormController::class ,'search'])** , elle permet de faire une recherche sur les articles par titre et par catégorie.
+
+5. **Les endpoints pour gerer les commentaires**
+
+    Comme endpoints pour gerer les commentaires nous avouns : 
+    - La route : **Route::post('/comment/{post}',[CommentsController::class ,'store'])** , elle permet de faire des commentaires sur n'importe quelle article.
+
+
+----
+
+
+### **Les endpoints de la partie utilisateur**
+
+
+1. **Les endpoints pour gerer les utilisateurs**
+
+    Comme endpoints pour gerer les utilisateurs nous avouns : 
+    - La route : **Route::post('/register',[UserController::class,'register'])** , elle permet a l'utilisateur de creer un compte.
+    - La route : **Route::post('login',[UserController::class,'login'])** , elle permet a l'utilisateur de se connecter a son compte.
+    - La route : **Route::post('logout',[UserController::class,'logout'])** , elle permet a l'utilisateur de se déconnecter de son compte.
+    - La route : **Route::get('/users',[UserController::class,'index'])** , elle permet de recuperer tous les utilisateurs du blog.
+    - La route : **Route::get('/users/show',[UserController::class,'show'])** , elle permet de recuperer un utilisateurs precis.
+    - La route : **Route::post('/user/{user}/update',[UserController::class,'update'])** , elle permet a l'utilisateur de modifier ses informations.
+    - La route : **Route::delete('/users/destroy',[UserController::class,'destroy'])** , elle permet a l'utilisateur de supprimer ses informations.
+
+2. **Les endpoints pour gerer les articles**
+
+    Comme endpoints pour gerer les articles nous avouns : 
+    - La route : **Route::post('/register',[UserController::class,'register'])** , elle permet a l'utilisateur de creer un compte.
+    - La route : **Route::post('login',[UserController::class,'login'])** , elle permet a l'utilisateur de se connecter a son compte.
+    - La route : **Route::post('logout',[UserController::class,'logout'])** , elle permet a l'utilisateur de se déconnecter de son compte.
+    - La route : **Route::get('/users',[UserController::class,'index'])** , elle permet de recuperer tous les utilisateurs du blog.
+    - La route : **Route::get('/users/show',[UserController::class,'show'])** , elle permet de recuperer un utilisateurs precis.
+    - La route : **Route::post('/user/{user}/update',[UserController::class,'update'])** , elle permet a l'utilisateur de modifier ses informations.
+    - La route : **Route::delete('/users/destroy',[UserController::class,'destroy'])** , elle permet a l'utilisateur de supprimer ses informations.
+
+
+3. **Les endpoints pour gerer les articles**
+
+    Comme endpoints pour gerer les utilisateurs nous avouns : 
+
+    - La route : **Route::get('/posts',[ArticleController::class,'index'])** , elle permet de recuperer tous les articles du blog avec son auteur,sa categorie,ses commentaires,les likes ,le nombre de like et de commentaires.
+    - La route : **Route::get('/posts/{post}',[ArticleController::class,'show'])** , elle permet de recuperer un articles du blog avec son auteur,sa categorie,ses commentaires,les likes ,le nombre de like et de commentaires.
+    - La route : **Route::post('/posts',[ArticleController::class,'store'])** , elle permet a un utilisateur de creer un article.
+    - La route : **Route::post('/posts/{post}/update',[ArticleController::class,'update'])** , elle permet de modifier les informations d'un article.
+    - La route : **Route::delete('/posts/{post}',[ArticleController::class,'destroy'])** , elle permet de supprimer un article. 
+
+
+4. **Les endpoints pour gerer les commentaires**
+
+    Comme endpoints pour gerer les commentaires nous avouns : 
+        
+    - La route : **Route::get('/comments/{post}',[CommentController::class,'index'])** , elle permet de recuperer tous les commentaires d'un article du blog.
+    - La route : **Route::post('/comments/{post}',[CommentController::class,'store'])** , elle permet de creer un commentaire d'un article du blog.
+    - La route : **Route::get('/comments/{comment}',[CommentController::class,'show'])** , elle permet de recuperer un article precis.
+    - La route : **Route::post('/comments/{comment}/update',[CommentController::class,'update'])** , elle permet a l'utilisateur de modifier un commentaire.
+    - La route : **Route::delete('/comments/{comment}',[CommentController::class,'destroy'])** , elle permet a l'utilisateur de supprimer son  commentaire.
+
+5. **Les endpoints pour gerer les categories**
+
+    Comme endpoints pour gerer les categories nous avouns : 
+        
+    - La route : **Route::get('/category',[CategoryController::class,'index'])** , elle permet de recuperer toutes les categories creees par un utilisateur pour les articles.
+    - La route : **Route::post('/category',[CategoryController::class,'store'])** , elle permet de creer une categorie.
+    - La route : **Route::get('/category/{category}',[CategoryController::class,'show'])** , elle permet de recuperer une categorie precise.
+    - La route : **Route::post('/category/{category}/update',[CategoryController::class,'update'])** , elle permet a l'utilisateur de modifier une categorie.
+    - La route : **Route::delete('/category/{category}/delete',[CategoryController::class,'destroy'])** , elle permet a l'utilisateur de supprimer une categorie.
+
+6. **Les endpoints pour gerer les tags**
+
+    Comme endpoints pour gerer les tags nous avouns : 
+        
+    - La route : **Route::get('/tags',[TagController::class,'index'])** , elle permet de recuperer toutes les tags crées par un utilisateur pour les articles.
+    - La route : **Route::post('/tags',[TagController::class,'store'])** , elle permet de creer un tag.
+    - La route : **Route::get('/tags/{tag}',[TagController::class,'show'])** , elle permet de recuperer un tag precise.
+    - La route : **Route::post('/tags/{tag}/update',[TagController::class,'update'])** , elle permet a l'utilisateur de modifier un tag.
+    - La route : **Route::delete('/tags/{tag}/delete',[TagController::class,'destroy'])** , elle permet a l'utilisateur de supprimer une categorie.
+
+7. **Les endpoints pour gerer les recherches**
+
+    Comme endpoints pour gerer les recherches nous avouns : 
+        
+    - La route : **Route::get('/searchs',[SearchController::class,'search'])** , elle permet de faire une recherche sur un article par titre,auteur,categorie,tag,contenu.
+
+8. **Les endpoints pour gerer les likes**
+
+    Comme endpoints pour gerer les likes nous avouns : 
+        
+    - La route : **Route::post('/posts/{post}/likes',[LikeController::class,'likeOrUnlike'])** , elle permet de faire un like ou de deliker.
+
+
+----
+
+
+## **Installation du projet** 
+
+Pour utiliser l'application vous devez respecter les étapes suivantes :  
+
+1. Telecharger l'application grace au lien github suivant : [DOWNLOAD API_BLOG](https://github.com/anague25/Create_Api_Blog/tree/Api_Blog_V1)
+2. Installer et executer wampserver, vous pouvez telecharger wampserer grace au lien suivant : [DOWNLOAD WAMPSERVER](https://www.wampserver.com/en/download-wampserver-64bits/)
+3. Creer une base de donnees ayant pour nom : ***laravel_api_blog***
+4. Utiliser un terminal par exemple ***git bash*** pour acceder au repertoire de l'application 
+5. Executer la commande ***php artisan migrate*** pour creer tout les tables du  projet dans la base de donnée
+6. Telecharger et intaller ***postman***, vous pouvez le faire garce au lien suivant : [DOWNLOAD POSTMAN](https://www.postman.com/downloads/)
+7. dans le repertoire du projet aller dans le dossier ***route*** puis ouvrer le fichier ***api.php*** et vous verez tous les endpoints de l'application 
+8. Executer la commande ***php artisan serve*** pour demarrer l'application
+9. Maintenant tout est pret pour utiliser l'application en testant les ***endpoints*** avec postman, Merci! 
+
